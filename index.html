@@ -48,7 +48,7 @@
 				        <h2>Agentless</h2>
 				    </section>
 				    <section>
-				        <h1>What can I do?</h1>
+				        <h1>To Do What?</h1>
 				        <h2>Configuration Management</h2>
 				        <h2>Cloud provisioning</h2>
 				        <h2>App Deployment</h2>
@@ -60,7 +60,7 @@
 				        <h2>Python 2.7</h2>
 				        <h2>Native OpenSSH and paramiko</h2>
 				        <h2>Yaml</h2>
-				        <h2>Jinja</h2>
+				        <h2>Jinja2</h2>
 				        <h2>JSON</h2>
 				    </section>
 				    <section>
@@ -70,9 +70,9 @@
 				<section>
 				    <h1>AD-HOC Mode</h1>
 				    <pre><code data-trim>
-$ ansible localhost -m setup
-
 $ ansible webservers -m ping
+
+$ ansible localhost -m setup
 
 $ ansible lyon -a "/sbin/reboot" -f 10
 
@@ -131,9 +131,12 @@ PLAY RECAP ***************************************************
 						<section>
 							<h1>Facts</h1>
 <pre><code data-trim>
+$ ansible localhost -m setup
+</code></pre>
+<pre><code data-trim>
 - name: print out operating system
   user: root
-	hosts: all
+  hosts: all
   gather_facts: True
   tasks:
   - debug: var=ansible_distribution
@@ -160,7 +163,7 @@ PLAY RECAP ***************************************************
 							<h1>Tasks</h1>
 <pre><code data-trim>
 - name: install nginx
-apt: name=nginx update_cache=yes
+  apt: name=nginx update_cache=yes
 </code></pre>
 <pre><code data-trim>
 TASK: [install nginx] ****************************************
@@ -204,7 +207,12 @@ server {
 <pre><code data-trim>
 handlers:
 - name: restart nginx
-service: name=nginx state=restarted
+  service: name=nginx state=restarted
+</code></pre>
+<pre><code data-trim>
+- name: copy TLS key
+  copy: src=files/nginx.key dest={{ key_file }} owner=root
+  notify: restart nginx
 </code></pre>
 						</section>
 						<section>
@@ -215,11 +223,17 @@ service: name=nginx state=restarted
 						</section>
 				</section>
 				<section>
-				    <h1>Modules</h1>
-				    <h2>Linux</h2>
-				    <h2>Windows</h2>
-				    <h2>Cloud</h2>
-				    <h2>Network</h2>
+					<section>
+						<h1>Modules</h1>
+						<h2>Core</h2>
+						<h2>Extras</h2>
+					</section>
+					<section>
+						<h1>Core Modules</h1>
+						<p>cloud - commands - database - files - inventory
+							network packaging - source_control - system -
+							utilities web_infrastructure - windows</p>
+					</section>
 				</section>
 				<section>
 				    <section>
